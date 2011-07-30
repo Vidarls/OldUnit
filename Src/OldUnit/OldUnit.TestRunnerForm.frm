@@ -1,7 +1,7 @@
 VERSION 5.00
 Object = "{831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCTL.OCX"
 Begin VB.Form TestRunnerForm 
-   Caption         =   "Form1"
+   Caption         =   "OldUnit TestRunner"
    ClientHeight    =   9600
    ClientLeft      =   108
    ClientTop       =   456
@@ -13,7 +13,7 @@ Begin VB.Form TestRunnerForm
    Begin VB.CommandButton cmdRunSelected 
       Caption         =   "Run selected"
       Height          =   312
-      Left            =   1800
+      Left            =   1560
       TabIndex        =   3
       Top             =   120
       Width           =   1332
@@ -21,22 +21,21 @@ Begin VB.Form TestRunnerForm
    Begin VB.CommandButton cmdRunAll 
       Caption         =   "Run all"
       Height          =   312
-      Left            =   240
+      Left            =   120
       TabIndex        =   2
       Top             =   120
       Width           =   1332
    End
    Begin VB.TextBox tbTestDetails 
       Height          =   2652
-      Left            =   0
+      Left            =   120
       TabIndex        =   1
-      Text            =   "Text1"
       Top             =   6840
       Width           =   16332
    End
    Begin MSComctlLib.TreeView trvTestList 
       Height          =   6132
-      Left            =   0
+      Left            =   120
       TabIndex        =   0
       Top             =   600
       Width           =   16332
@@ -70,9 +69,9 @@ End Sub
 Public Sub NewResult(result As TestResult)
   Dim resultNode As Node
   Set resultNode = trvTestList.Nodes(CreateTestMethodKey(result.FIXTURENAME, result.Name))
-  resultNode.Text = resultNode.Text + " (" + IIf(result.HasPassed, "Passed", "Failed") + ")"
+  resultNode.Text = CreatePresentationText(result.Name) + " (" + IIf(result.HasPassed, "Passed", "Failed") + ")"
   resultNode.Tag = result.failureText
-  
+  resultNode.ForeColor = IIf(result.HasPassed, &HC000&, vbRed)
 End Sub
 
 Private Sub cmdRunSelected_Click()
@@ -81,6 +80,7 @@ End Sub
 
 Private Sub Form_Load()
   trvTestList.Nodes.Clear
+  ResizeControls
 End Sub
 
 Public Sub LoadTests(newTestRunner As TestRunner)
@@ -89,20 +89,18 @@ Public Sub LoadTests(newTestRunner As TestRunner)
   Dim newNode As Node
   Dim fixtureKey As String
   Dim testMethodKey As String
-  Dim testMethodText As String
   
   Set localTestRunner = newTestRunner
   Call localTestRunner.AddReporter(Me)
   
   For Each testFixture In localTestRunner
     fixtureKey = TypeName(testFixture)
-    Set newNode = trvTestList.Nodes.Add(, , fixtureKey, fixtureKey)
+    Set newNode = trvTestList.Nodes.Add(, , fixtureKey, CreatePresentationText(fixtureKey))
     newNode.Tag = ISFIXTURE
     newNode.Expanded = True
     For Each testMethod In testFixture.Tests
       testMethodKey = CreateTestMethodKey(fixtureKey, CStr(testMethod))
-      testMethodText = CreateTestMethodText(CStr(testMethod))
-      Set newNode = trvTestList.Nodes.Add(fixtureKey, tvwChild, testMethodKey, testMethodText)
+      Set newNode = trvTestList.Nodes.Add(fixtureKey, tvwChild, testMethodKey, CreatePresentationText(CStr(testMethod)))
     Next
   Next
 End Sub
@@ -111,13 +109,32 @@ Private Function CreateTestMethodKey(testFixtureName As String, testMethodName A
   CreateTestMethodKey = testFixtureName + KEYSPLITSTRING + testMethodName
 End Function
 
-Private Function CreateTestMethodText(testMethodName As String)
-  CreateTestMethodText = Replace(testMethodName, "_", " ")
+Private Function CreatePresentationText(testMethodName As String)
+  CreatePresentationText = Replace(testMethodName, "_", " ")
 End Function
 
+Private Sub Form_Resize()
+  ResizeControls
+End Sub
+
 Private Sub trvTestList_NodeCheck(ByVal Node As MSComctlLib.Node)
-  Dim childNode As Node
-  
+  Call CheckChildren(Node)
+End Sub
+
+'http://www.vbforums.com/showthread.php?t=249131
+Private Sub CheckChildren(Node As Node)
+Dim i As Integer, nodX As Node
+
+  If Node.Children <> 0 Then 'If node has children
+    Set nodX = Node.Child 'Catch first child
+    For i = 1 To Node.Children 'Loop through each child
+      nodX.Checked = Node.Checked 'Set as checked
+      
+      CheckChildren nodX 'Check to see if this node has children
+      
+      Set nodX = nodX.Next 'Catch next child
+    Next 'Loop
+  End If
 End Sub
 
 Private Sub trvTestList_NodeClick(ByVal Node As MSComctlLib.Node)
@@ -145,4 +162,16 @@ Private Sub RunSelected()
       Call localTestRunner.RunTest(decomposedKey(FIXTURENAME), decomposedKey(METHODNAME))
     End If
   Next
+End Sub
+
+Private Sub ResizeControls()
+  Dim availableHeigt As Integer
+  
+  trvTestList.Width = Me.Width - 450
+  tbTestDetails.Width = Me.Width - 450
+  
+  availableHeigt = Me.Height - trvTestList.Top - 800
+  trvTestList.Height = (availableHeigt \ 3) * 2
+  tbTestDetails.Top = trvTestList.Top + trvTestList.Height + 120
+  tbTestDetails.Height = availableHeigt \ 3
 End Sub
