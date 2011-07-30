@@ -1,12 +1,13 @@
 Type=OleDll
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\Windows\system32\stdole2.tlb#OLE Automation
 Class=TestRunner; OldUnit.TestRunner.cls
-Class=TestFixtureResults; OldUnit.TestFixtureResults.cls
 Class=TestResult; OldUnit.TestResult.cls
-Class=TestFixtureHelper; OldUnit.TestFixtureHelper.cls
-Class=TestErr; OldUnitTestErr.cls
 Form=OldUnit.TestRunnerForm.frm
 Object={831FDD16-0C5C-11D2-A9FC-0000F8754DA1}#2.0#0; MSCOMCTL.OCX
+Class=Asserter; OldUnit.Asserter.cls
+Class=Assertions; OldUnit.Assertions.cls
+Class=TestFixtureHelper; OldUnit.TestFixtureHelper.cls
+Class=TestErr; OldUnitTestErr.cls
 Startup="(None)"
 HelpFile=""
 Title="Project1"

@@ -29,6 +29,7 @@ Begin VB.Form TestRunnerForm
    Begin VB.TextBox tbTestDetails 
       Height          =   2652
       Left            =   120
+      MultiLine       =   -1  'True
       TabIndex        =   1
       Top             =   6840
       Width           =   16332
@@ -72,6 +73,10 @@ Public Sub NewResult(result As TestResult)
   resultNode.Text = CreatePresentationText(result.Name) + " (" + IIf(result.HasPassed, "Passed", "Failed") + ")"
   resultNode.Tag = result.failureText
   resultNode.ForeColor = IIf(result.HasPassed, &HC000&, vbRed)
+  If Not result.HasPassed Then
+    resultNode.Selected = True
+    tbTestDetails.Text = resultNode.Tag
+  End If
 End Sub
 
 Private Sub cmdRunSelected_Click()

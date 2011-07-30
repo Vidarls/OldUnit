@@ -24,18 +24,24 @@ Public Sub AddReporter(reporter As Variant)
   Call reporters.Add(reporter)
 End Sub
 
-Public Sub Show()
+Public Sub Show(Optional modal As Integer = 0)
   Load TestRunnerForm
   Call TestRunnerForm.LoadTests(Me)
-  Call TestRunnerForm.Show
+  Call TestRunnerForm.Show(modal)
+End Sub
+
+Public Sub ShowAndRun(Optional modal As Integer = 0)
+  Load TestRunnerForm
+  Call TestRunnerForm.LoadTests(Me)
+  RunAll
+  Call TestRunnerForm.Show(modal)
 End Sub
 
 Public Sub RunAll()
-  On Error GoTo handleRunnerErrors
+'On Error GoTo handleRunnerErrors
   Dim testFixture As Variant
   Dim instanceUnderTest As Variant
   Dim testName As Variant
-  Dim testFailed As TestErr
   
   For Each testFixture In testFixtures
     For Each testName In testFixture.Tests
@@ -49,34 +55,43 @@ handleRunnerErrors:
 End Sub
 
 Public Sub RunTest(testFixtureName As String, testMethodName As String)
+'On Error GoTo handleRunnerErrors
   Dim instanceUnderTest As Variant
   Dim testFailed As TestErr
   
   Set instanceUnderTest = testFixtures(testFixtureName).Create
   Set testFailed = CallByName(instanceUnderTest, testMethodName, VbMethod)
+  
   If testFailed Is Nothing Then
     Call ReportPass(testFixtureName, testMethodName)
   Else
-    Call ReportFailure(testFixtureName, testMethodName, testFailed.AsString)
+    Call ReportFailure(testFixtureName, testMethodName, testFailed)
   End If
 Exit Sub
+
 handleRunnerErrors:
   MsgBox "Testrunner internal error: " + CStr(Err.Number) + " " + Err.Description
 End Sub
 
-Private Sub ReportFailure(FIXTURENAME As String, testName As String, failureText As String)
+Private Sub ReportFailure(testFixtureName As String, testName As String, testFailed As TestErr)
   Dim newTestResult As TestResult
-
+  Dim failureText As String
+  
+  failureText = "Test failed" + vbNewLine + _
+                CStr(testFailed.Number) + vbNewLine + _
+                testFailed.Source + vbNewLine + vbNewLine + _
+                testFailed.Description
+                
   Set newTestResult = New TestResult
-  Call newTestResult.Failed(FIXTURENAME, testName, failureText)
+  Call newTestResult.Failed(testFixtureName, testName, failureText)
   Call ReportResultToReporters(newTestResult)
 End Sub
 
-Private Sub ReportPass(FIXTURENAME As String, testName As String)
+Private Sub ReportPass(testFixtureName As String, testName As String)
   Dim newTestResult As TestResult
 
   Set newTestResult = New TestResult
-  Call newTestResult.Passed(FIXTURENAME, testName)
+  Call newTestResult.Passed(testFixtureName, testName)
   Call ReportResultToReporters(newTestResult)
 End Sub
 
