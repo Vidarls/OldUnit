@@ -1,10 +1,8 @@
 Type=OleDll
 Reference=*\G{00020430-0000-0000-C000-000000000046}#2.0#0#..\..\..\..\..\..\Windows\system32\stdole2.tlb#OLE Automation
 Class=TestRunner; OldUnit.TestRunner.cls
-Class=GuiReporter; OldUnit.GuiReporter.cls
 Class=TestFixtureResults; OldUnit.TestFixtureResults.cls
 Class=TestResult; OldUnit.TestResult.cls
-Form=OldUnit.GuidReporterForm.frm
 Class=TestFixtureHelper; OldUnit.TestFixtureHelper.cls
 Class=TestErr; OldUnitTestErr.cls
 Form=OldUnit.TestRunnerForm.frm

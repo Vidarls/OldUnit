@@ -10,16 +10,16 @@ Begin VB.Form TestRunnerForm
    ScaleHeight     =   9600
    ScaleWidth      =   16548
    StartUpPosition =   3  'Windows Default
-   Begin VB.CommandButton Command2 
-      Caption         =   "Command1"
+   Begin VB.CommandButton cmdRunSelected 
+      Caption         =   "Run selected"
       Height          =   312
       Left            =   1800
       TabIndex        =   3
       Top             =   120
       Width           =   1332
    End
-   Begin VB.CommandButton Command1 
-      Caption         =   "Command1"
+   Begin VB.CommandButton cmdRunAll 
+      Caption         =   "Run all"
       Height          =   312
       Left            =   240
       TabIndex        =   2
@@ -47,6 +47,7 @@ Begin VB.Form TestRunnerForm
       LineStyle       =   1
       Style           =   6
       Checkboxes      =   -1  'True
+      SingleSel       =   -1  'True
       Appearance      =   1
    End
 End
@@ -56,6 +57,27 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Dim localTestRunner As TestRunner
+
+Private Const ISFIXTURE As Integer = -1
+Private Const KEYSPLITSTRING As String = "<--SPLIT-->"
+Private Const METHODNAME As String = "methodname"
+Private Const FIXTURENAME As String = "fixturename"
+
+Private Sub cmdRunAll_Click()
+  Call localTestRunner.RunAll
+End Sub
+
+Public Sub NewResult(result As TestResult)
+  Dim resultNode As Node
+  Set resultNode = trvTestList.Nodes(CreateTestMethodKey(result.FIXTURENAME, result.Name))
+  resultNode.Text = resultNode.Text + " (" + IIf(result.HasPassed, "Passed", "Failed") + ")"
+  resultNode.Tag = result.failureText
+  
+End Sub
+
+Private Sub cmdRunSelected_Click()
+  RunSelected
+End Sub
 
 Private Sub Form_Load()
   trvTestList.Nodes.Clear
@@ -70,10 +92,12 @@ Public Sub LoadTests(newTestRunner As TestRunner)
   Dim testMethodText As String
   
   Set localTestRunner = newTestRunner
+  Call localTestRunner.AddReporter(Me)
   
   For Each testFixture In localTestRunner
     fixtureKey = TypeName(testFixture)
     Set newNode = trvTestList.Nodes.Add(, , fixtureKey, fixtureKey)
+    newNode.Tag = ISFIXTURE
     newNode.Expanded = True
     For Each testMethod In testFixture.Tests
       testMethodKey = CreateTestMethodKey(fixtureKey, CStr(testMethod))
@@ -84,10 +108,41 @@ Public Sub LoadTests(newTestRunner As TestRunner)
 End Sub
 
 Private Function CreateTestMethodKey(testFixtureName As String, testMethodName As String)
-  CreateTestMethodKey = testFixtureName + localTestRunner.GetKeySplitString + testMethodName
+  CreateTestMethodKey = testFixtureName + KEYSPLITSTRING + testMethodName
 End Function
 
 Private Function CreateTestMethodText(testMethodName As String)
   CreateTestMethodText = Replace(testMethodName, "_", " ")
 End Function
 
+Private Sub trvTestList_NodeCheck(ByVal Node As MSComctlLib.Node)
+  Dim childNode As Node
+  
+End Sub
+
+Private Sub trvTestList_NodeClick(ByVal Node As MSComctlLib.Node)
+  tbTestDetails.Text = Node.Tag
+End Sub
+
+Private Function DecomposeTestMethodKey(testMethodKey As String) As Collection
+  Dim result As Collection
+  Dim splitArray() As String
+  Set result = New Collection
+  
+  splitArray = Split(testMethodKey, KEYSPLITSTRING)
+  Call result.Add(splitArray(0), FIXTURENAME)
+  Call result.Add(splitArray(1), METHODNAME)
+  Set DecomposeTestMethodKey = result
+End Function
+
+Private Sub RunSelected()
+  Dim testNode As Node
+  Dim decomposedKey As Collection
+  
+  For Each testNode In trvTestList.Nodes
+    If testNode.Checked And Not testNode.Tag = ISFIXTURE Then
+      Set decomposedKey = DecomposeTestMethodKey(testNode.Key)
+      Call localTestRunner.RunTest(decomposedKey(FIXTURENAME), decomposedKey(METHODNAME))
+    End If
+  Next
+End Sub
