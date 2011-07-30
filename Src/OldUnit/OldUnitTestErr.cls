@@ -18,25 +18,25 @@ Dim internalSource      As String
 Dim internalDescription As String
 
 Public Property Get Number() As Long
-    Number = internalNumber
+  Number = internalNumber
 End Property
 
 Public Property Get Source() As String
-    Source = internalSource
+  Source = internalSource
 End Property
 
 Public Property Get Description() As String
-    Description = internalDescription
+  Description = internalDescription
 End Property
 
 Public Property Get AsString() As String
-    AsString = CStr(internalNumber) + " : " + internalSource + " : " + internalDescription
+  AsString = CStr(internalNumber) + " : " + internalSource + " : " + internalDescription
 End Property
 
 
 Public Sub CopyFromErr()
-    internalNumber = Err.Number
-    internalSource = Err.Source
-    internalDescription = Err.Description
+  internalNumber = Err.Number
+  internalSource = Err.Source
+  internalDescription = Err.Description
 End Sub
 

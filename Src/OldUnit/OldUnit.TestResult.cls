@@ -19,31 +19,31 @@ Dim internalPassed          As Boolean
 Dim internalFailureText     As String
 
 Public Property Get fixtureName() As String
-    fixtureName = internalFixtureName
+  fixtureName = internalFixtureName
 End Property
 
 Public Property Get Name() As String
-    Name = internalName
+  Name = internalName
 End Property
 
 Public Property Get HasPassed() As Boolean
-    HasPassed = internalPassed
+  HasPassed = internalPassed
 End Property
 
 Public Property Get failureText() As String
-    failureText = internalFailureText
+  failureText = internalFailureText
 End Property
 
 Public Sub Passed(fixtureName As String, testName As String)
-    internalFixtureName = fixtureName
-    internalName = testName
-    internalPassed = True
-    internalFailureText = "Passed"
+  internalFixtureName = fixtureName
+  internalName = testName
+  internalPassed = True
+  internalFailureText = "Passed"
 End Sub
 
 Public Sub Failed(fixtureName As String, testName As String, failureText As String)
-    internalFixtureName = fixtureName
-    internalName = testName
-    internalPassed = False
-    internalFailureText = failureText
+  internalFixtureName = fixtureName
+  internalName = testName
+  internalPassed = False
+  internalFailureText = failureText
 End Sub

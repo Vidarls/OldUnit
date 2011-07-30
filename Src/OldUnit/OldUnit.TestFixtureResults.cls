@@ -18,34 +18,34 @@ Dim internalFixtureName         As String
 Dim internalNumberOfFailures    As Integer
 
 Public Property Get TestResults() As Collection
-    Set TestResults = internalTestResults
+  Set TestResults = internalTestResults
 End Property
 
 Public Property Get fixtureName() As String
-    fixtureName = internalFixtureName
+  fixtureName = internalFixtureName
 End Property
 
 Public Property Get HasFailures() As Boolean
-    HasFailures = internalNumberOfFailures > 0
+  HasFailures = internalNumberOfFailures > 0
 End Property
 
 Public Property Get NumberOfFailures() As Integer
-    NumberOfFailures = internalNumberOfFailures
+  NumberOfFailures = internalNumberOfFailures
 End Property
 
-Public Sub AddTestResult(newTestResult As testResult)
-    internalFixtureName = newTestResult.fixtureName
-    If Not newTestResult.HasPassed Then
-        internalNumberOfFailures = internalNumberOfFailures + 1
-    End If
-    Call internalTestResults.Add(newTestResult)
+Public Sub AddTestResult(newTestResult As TestResult)
+  internalFixtureName = newTestResult.fixtureName
+  If Not newTestResult.HasPassed Then
+      internalNumberOfFailures = internalNumberOfFailures + 1
+  End If
+  Call internalTestResults.Add(newTestResult)
 End Sub
 
 Private Sub Class_initialize()
-    Set internalTestResults = New Collection
-    internalNumberOfFailures = 0
+  Set internalTestResults = New Collection
+  internalNumberOfFailures = 0
 End Sub
 
 Private Sub Class_terminate()
-    Set internalTestResults = Nothing
+  Set internalTestResults = Nothing
 End Sub

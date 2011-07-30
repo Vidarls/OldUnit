@@ -14,7 +14,7 @@ Attribute VB_Exposed = True
 Option Explicit
 
 Public Function Fail() As TestErr
-    Dim newError As TestErr: Set newError = New TestErr
-    Call newError.CopyFromErr
-    Set Fail = newError
+  Dim newError As TestErr: Set newError = New TestErr
+  Call newError.CopyFromErr
+  Set Fail = newError
 End Function

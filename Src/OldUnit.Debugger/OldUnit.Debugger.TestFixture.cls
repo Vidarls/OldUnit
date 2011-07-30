@@ -23,7 +23,7 @@ Dim helper As TestFixtureHelper
 ' to be executed by the test runner
 '**********************************
 Public Property Get Tests() As Collection
-    Set Tests = testNames
+  Set Tests = testNames
 End Property
 
 '**********************************
@@ -33,7 +33,7 @@ End Property
 ' the testfixture
 '**********************************
 Public Function Create() As TestFixture
-    Set Create = New TestFixture
+  Set Create = New TestFixture
 End Function
 
 '**********************************
@@ -47,10 +47,10 @@ End Function
 ' the test functions
 '*********************************
 Private Sub Class_initialize()
-    Set testNames = New Collection
-    Set helper = New TestFixtureHelper
-    Call testNames.Add("This_test_should_fail")
-    Call testNames.Add("This_test_should_pass")
+  Set testNames = New Collection
+  Set helper = New TestFixtureHelper
+  Call testNames.Add("This_test_should_fail")
+  Call testNames.Add("This_test_should_pass")
 End Sub
 
 '*********************************
@@ -61,12 +61,12 @@ End Sub
 '*********************************
 Public Function This_test_should_fail() As TestErr
 On Error GoTo errorHandler
-    Call Err.Raise(vbObjectError + 1000, "This test should fail", "Something went horribly wrong")
-    Set This_test_should_fail = Nothing
+  Call Err.Raise(vbObjectError + 1000, "This test should fail", "Something went horribly wrong")
+  Set This_test_should_fail = Nothing
 Exit Function
 
 errorHandler:
-    Set This_test_should_fail = helper.fail
+  Set This_test_should_fail = helper.fail
 End Function
 
 '*********************************
@@ -76,15 +76,15 @@ End Function
 ' an error have been raised
 '*********************************
 Public Function This_test_should_pass() As TestErr
-    On Error GoTo errorHandler
-    Set This_test_should_pass = Nothing
+  On Error GoTo errorHandler
+  Set This_test_should_pass = Nothing
 Exit Function
 
 errorHandler:
-    This_test_should_pass = helper.fail
+  This_test_should_pass = helper.fail
 End Function
 
 Private Sub Class_terminate()
-    Set testNames = Nothing
-    Set helper = Nothing
+  Set testNames = Nothing
+  Set helper = Nothing
 End Sub
