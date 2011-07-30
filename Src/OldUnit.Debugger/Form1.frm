@@ -31,11 +31,6 @@ Private Sub Command1_Click()
     Dim runner As TestRunner
     Set runner = New TestRunner
     Call runner.AddFixture(New TestFixture)
-    Call runner.Run
-    
-    
+    Call runner.Show
 End Sub
 
-Private Sub Form_Load()
-
-End Sub

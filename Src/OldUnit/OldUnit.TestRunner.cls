@@ -17,29 +17,41 @@ Dim testFixtures            As Collection
 Dim reporters               As Collection
 Dim results                 As Collection
 
-Public Sub AddFixture(TestFixture As Variant)
-  Call testFixtures.Add(TestFixture)
+Private Const KEYSPLITSTRING As String = "<--SPLIT-->"
+
+Friend Function GetKeySplitString() As String
+  GetKeySplitString = KEYSPLITSTRING
+End Function
+
+Public Sub AddFixture(testFixture As Variant)
+  Call testFixtures.Add(testFixture)
 End Sub
 
 Public Sub AddReporter(reporter As Variant)
 
 End Sub
 
-Public Sub Run()
+Public Sub Show()
+  Load TestRunnerForm
+  Call TestRunnerForm.LoadTests(Me)
+  Call TestRunnerForm.Show
+End Sub
+
+Public Sub RunAll()
   On Error GoTo handleRunnerErrors
-  Dim TestFixture As Variant
+  Dim testFixture As Variant
   Dim instanceUnderTest As Variant
   Dim testName As Variant
   Dim testFailed As TestErr
   
-  For Each TestFixture In testFixtures
-    For Each testName In TestFixture.tests
-      Set instanceUnderTest = TestFixture.Create()
+  For Each testFixture In testFixtures
+    For Each testName In testFixture.Tests
+      Set instanceUnderTest = testFixture.Create()
       Set testFailed = CallByName(instanceUnderTest, testName, VbMethod)
       If Not testFailed Is Nothing Then
-        Call ReportFailure(TypeName(TestFixture), CStr(testName), testFailed.AsString)
+        Call ReportFailure(TypeName(testFixture), CStr(testName), testFailed.AsString)
       Else
-        Call ReportPass(TypeName(TestFixture), CStr(testName))
+        Call ReportPass(TypeName(testFixture), CStr(testName))
       End If
     Next
   Next

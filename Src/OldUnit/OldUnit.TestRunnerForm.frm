@@ -43,8 +43,9 @@ Begin VB.Form TestRunnerForm
       _ExtentX        =   28808
       _ExtentY        =   10816
       _Version        =   393217
+      Indentation     =   353
       LineStyle       =   1
-      Style           =   7
+      Style           =   6
       Checkboxes      =   -1  'True
       Appearance      =   1
    End
@@ -61,15 +62,32 @@ Private Sub Form_Load()
 End Sub
 
 Public Sub LoadTests(newTestRunner As TestRunner)
-  Dim test As Variant
+  Dim testFixture As Variant
+  Dim testMethod As Variant
   Dim newNode As Node
-  Dim testFixtureIndex As Integer
-  Dim treeViewIndex As Integer
+  Dim fixtureKey As String
+  Dim testMethodKey As String
+  Dim testMethodText As String
   
   Set localTestRunner = newTestRunner
   
-  For Each test In localTestRunner
-    
-    
+  For Each testFixture In localTestRunner
+    fixtureKey = TypeName(testFixture)
+    Set newNode = trvTestList.Nodes.Add(, , fixtureKey, fixtureKey)
+    newNode.Expanded = True
+    For Each testMethod In testFixture.Tests
+      testMethodKey = CreateTestMethodKey(fixtureKey, CStr(testMethod))
+      testMethodText = CreateTestMethodText(CStr(testMethod))
+      Set newNode = trvTestList.Nodes.Add(fixtureKey, tvwChild, testMethodKey, testMethodText)
+    Next
   Next
 End Sub
+
+Private Function CreateTestMethodKey(testFixtureName As String, testMethodName As String)
+  CreateTestMethodKey = testFixtureName + localTestRunner.GetKeySplitString + testMethodName
+End Function
+
+Private Function CreateTestMethodText(testMethodName As String)
+  CreateTestMethodText = Replace(testMethodName, "_", " ")
+End Function
+
