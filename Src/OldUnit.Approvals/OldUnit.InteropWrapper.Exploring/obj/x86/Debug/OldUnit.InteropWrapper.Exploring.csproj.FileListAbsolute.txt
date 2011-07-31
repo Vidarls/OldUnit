@@ -1,0 +1,9 @@
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\obj\x86\Debug\ResolveAssemblyReference.cache
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\OldUnit.InteropWrapper.Exploring.exe.config
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\OldUnit.InteropWrapper.Exploring.exe
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\OldUnit.InteropWrapper.Exploring.pdb
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\ApprovalTests.dll
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\ApprovalUtilities.dll
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\obj\x86\Debug\OldUnit.InteropWrapper.Exploring.exe
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\obj\x86\Debug\OldUnit.InteropWrapper.Exploring.pdb
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\ApprovalTests.pdb
