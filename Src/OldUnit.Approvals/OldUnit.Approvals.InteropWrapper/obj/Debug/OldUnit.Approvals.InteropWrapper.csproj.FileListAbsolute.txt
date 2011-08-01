@@ -7,3 +7,6 @@ C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.Approvals.Interop
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.Approvals.InteropWrapper\obj\Debug\OldUnit.Approvals.InteropWrapper.pdb
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.Approvals.InteropWrapper\bin\Debug\OldUnit.Approvals.InteropWrapper.tlb
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.Approvals.InteropWrapper\bin\Debug\ApprovalTests.pdb
+C:\Users\Vidar\Documents\OldUnit\DebugBin\OldUnit.Approvals.InteropWrapper.dll
+C:\Users\Vidar\Documents\OldUnit\DebugBin\OldUnit.Approvals.InteropWrapper.pdb
+C:\Users\Vidar\Documents\OldUnit\DebugBin\OldUnit.Approvals.InteropWrapper.tlb

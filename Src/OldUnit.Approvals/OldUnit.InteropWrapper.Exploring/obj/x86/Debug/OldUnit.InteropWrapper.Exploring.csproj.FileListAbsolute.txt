@@ -7,3 +7,5 @@ C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Ex
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\obj\x86\Debug\OldUnit.InteropWrapper.Exploring.exe
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\obj\x86\Debug\OldUnit.InteropWrapper.Exploring.pdb
 C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\ApprovalTests.pdb
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\xunit.dll
+C:\Users\Vidar\Documents\OldUnit\Src\OldUnit.Approvals\OldUnit.InteropWrapper.Exploring\bin\Debug\xunit.xml

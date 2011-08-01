@@ -14,8 +14,8 @@ namespace OldUnit.InteropWrapper.Exploring
             var x = "xalue;";
             Console.WriteLine("Starting");
             Approvals.DefaultNamerSource = (() => new OldUnitNamer(v, x));
-            Approvals.DefaultReporterSource = (() => new ApprovalTests.Reporters.FileLauncherReporter());
-            x = "changed";
+            Approvals.DefaultReporterSource = (() => new ApprovalTests.Reporters.DiffReporter());
+            x = @"c:\testnamer";
             Approvals.Approve("TEST");
             
             Console.ReadLine();

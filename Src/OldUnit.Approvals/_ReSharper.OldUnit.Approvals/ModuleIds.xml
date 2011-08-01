@@ -1,5 +1,7 @@
 <Modules>
   <Module PersistentId="6A89E355-642C-4757-A1C6-381F763B665A" ModuleId="OldUnit.Approvals.InteropWrapper" />
   <Module PersistentId="6887D382-FFED-4B25-A831-1BED4F02AD1D" ModuleId="OldUnit.InteropWrapper.Exploring" />
-  <Module PersistentId="ApprovalTests, Version=1.0.11.0, Culture=neutral" ModuleId="ApprovalTests" />
+  <Module PersistentId="d:Miscellaneous Files" ModuleId="ApprovalTests" />
+  <Module PersistentId="A3CD2054-D4DF-410C-87C0-3289141F2BE1" ModuleId="OldUnit.Approvals.InteropWrapper.Test_1" />
+  <Module PersistentId="ApprovalTests, Version=1.0.10.0, Culture=neutral" ModuleId="ApprovalTests_1" />
 </Modules>
