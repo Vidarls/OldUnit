@@ -1,0 +1,3 @@
+[submodule "Src/ApprovalTests"]
+	path = Src/ApprovalTests
+	url = git@github.com:Vidarls/ApprovalTests.git
